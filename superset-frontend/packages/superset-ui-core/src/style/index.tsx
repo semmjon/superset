@@ -54,15 +54,21 @@ export const styled = emotionStyled;
 
 const defaultTheme = {
   borderRadius: 4,
+  icon_heigth: 0.8,
   colors: {
     text: {
       label: '#879399',
       help: '#737373',
     },
+    ionos: {
+      blue1: '#003D8F',
+      blue2: '#0B3476',
+      blue3: '#2d4ea0',
+    },
     primary: {
-      base: '#20A7C9',
-      dark1: '#1A85A0',
-      dark2: '#156378',
+      base: '#0B9DCC',
+      dark1: '#3C9DDB',
+      dark2: '#0881BA',
       light1: '#79CADE',
       light2: '#A5DAE9',
       light3: '#D2EDF4',

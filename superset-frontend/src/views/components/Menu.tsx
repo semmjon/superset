@@ -90,7 +90,10 @@ export interface MenuObjectProps extends MenuObjectChildProps {
 
 const StyledHeader = styled.header`
   ${({ theme }) => `
-      background-color: ${theme.colors.grayscale.light5};
+      * {
+        background-color: ${theme.colors.ionos.blue1};
+        color: ${theme.colors.primary.light5};
+      }
       margin-bottom: 2px;
       &:nth-last-of-type(2) nav {
         margin-bottom: 2px;
@@ -111,11 +114,12 @@ const StyledHeader = styled.header`
         img {
           height: 100%;
           object-fit: contain;
+          height: ${theme.icon_heigth * 100}%;
         }
       }
       .navbar-brand-text {
-        border-left: 1px solid ${theme.colors.grayscale.light2};
-        border-right: 1px solid ${theme.colors.grayscale.light2};
+        // border-left: 1px solid ${theme.colors.grayscale.light2};
+        // border-right: 1px solid ${theme.colors.grayscale.light2};
         height: 100%;
         color: ${theme.colors.grayscale.dark1};
         padding-left: ${theme.gridUnit * 4}px;
@@ -147,12 +151,16 @@ const StyledHeader = styled.header`
       }
       .ant-menu-horizontal .ant-menu-item {
         height: 100%;
-        line-height: inherit;
+        line-height: 45px;
       }
       .ant-menu > .ant-menu-item > a {
+        color: ${theme.colors.primary.light5};
         padding: ${theme.gridUnit * 4}px;
       }
       @media (max-width: 767px) {
+        * {
+          background-color: ${theme.colors.ionos.blue1} !important;
+        }
         .ant-menu-item {
           padding: 0 ${theme.gridUnit * 6}px 0
             ${theme.gridUnit * 3}px !important;
@@ -172,8 +180,7 @@ const StyledHeader = styled.header`
       }
       .ant-menu-item a {
         &:hover {
-          color: ${theme.colors.grayscale.dark1};
-          background-color: ${theme.colors.primary.light5};
+          color: ${theme.colors.primary.light5};
           border-bottom: none;
           margin: 0;
           &:after {
@@ -303,6 +310,9 @@ export function Menu({
               </a>
             )}
           </Tooltip>
+          <a className="navbar-brand-text" href={brand.path}>
+            <span>{brand.alt}</span>
+          </a>
           {brand.text && (
             <div className="navbar-brand-text">
               <span>{brand.text}</span>

@@ -79,6 +79,7 @@ const StyledNav = styled(AntdMenu)`
 
   &:not(.ant-menu-dark) > .ant-menu-submenu,
   &:not(.ant-menu-dark) > .ant-menu-item {
+    line-height: 45px;
     &:hover {
       border-bottom: none;
     }

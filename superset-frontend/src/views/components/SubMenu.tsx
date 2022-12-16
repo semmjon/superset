@@ -35,6 +35,7 @@ const StyledHeader = styled.div`
     margin-right: ${({ theme }) => theme.gridUnit * 3}px;
     text-align: left;
     font-size: 18px;
+    margin: 40px 78px;
     padding: ${({ theme }) => theme.gridUnit * 3}px;
     display: inline-block;
     line-height: ${({ theme }) => theme.gridUnit * 9}px;
@@ -46,9 +47,13 @@ const StyledHeader = styled.div`
     margin-right: ${({ theme }) => theme.gridUnit * 3}px;
     float: right;
     position: absolute;
-    right: 0;
+    right: 95px;
     ul.ant-menu-root {
       padding: 0px;
+      margin-top: 40px;
+    }
+    .ant-btn {
+      margin-top: 40px;
     }
     li[role='menuitem'] {
       border: 0;
@@ -57,6 +62,9 @@ const StyledHeader = styled.div`
         border-bottom: transparent;
       }
     }
+  }
+  ul.ant-menu-root {
+    margin-top: 40px;
   }
   .nav-right-collapse {
     display: flex;
@@ -67,7 +75,10 @@ const StyledHeader = styled.div`
     padding-left: 10px;
   }
   .menu {
-    background-color: ${({ theme }) => theme.colors.grayscale.light5};
+    color: ${({ theme }) => theme.colors.primary.light5};
+    background-color: ${({ theme }) => theme.colors.ionos.blue1};
+    margin-top: -2px;
+    border-top: 1px solid ${({ theme }) => theme.colors.ionos.blue3};
     .ant-menu-horizontal {
       line-height: inherit;
       .ant-menu-item {
@@ -79,6 +90,9 @@ const StyledHeader = styled.div`
       }
     }
     .ant-menu {
+      border-top: 0;
+      color: ${({ theme }) => theme.colors.primary.light5};
+      background-color: ${({ theme }) => theme.colors.ionos.blue1};
       padding: ${({ theme }) => theme.gridUnit * 4}px 0px;
     }
   }
@@ -88,12 +102,13 @@ const StyledHeader = styled.div`
   }
 
   .menu .ant-menu-item {
+    background: ${({ theme }) => theme.colors.ionos.blue1};
     li,
     div {
       a,
       div {
         font-size: ${({ theme }) => theme.typography.sizes.s}px;
-        color: ${({ theme }) => theme.colors.secondary.dark1};
+        color: ${({ theme }) => theme.colors.primary.light5};
 
         a {
           margin: 0;
@@ -110,10 +125,14 @@ const StyledHeader = styled.div`
       &.no-router a {
         padding: ${({ theme }) => theme.gridUnit * 2}px
           ${({ theme }) => theme.gridUnit * 4}px;
+        background: ${({ theme }) => theme.colors.primary.dark1};
+        border-radius: ${({ theme }) => theme.borderRadius}px;
+        :hover {
+          background: ${({ theme }) => theme.colors.primary.dark2};
+        }
       }
 
       &.active a {
-        background: ${({ theme }) => theme.colors.secondary.light4};
         border-radius: ${({ theme }) => theme.borderRadius}px;
       }
     }
@@ -126,7 +145,9 @@ const StyledHeader = styled.div`
     li > div:hover,
     div > div:hover,
     div > a:hover {
-      background: ${({ theme }) => theme.colors.secondary.light4};
+      a {
+        background: ${({ theme }) => theme.colors.ionos.blue2};
+      }
       border-bottom: none;
       border-radius: ${({ theme }) => theme.borderRadius}px;
       margin-bottom: ${({ theme }) => theme.gridUnit * 2}px;
@@ -142,9 +163,12 @@ const StyledHeader = styled.div`
   }
   @media (max-width: 767px) {
     .header,
-    .nav-right {
+    .nav-right,
+    .nav-right-collapse {
       position: relative;
-      margin-left: ${({ theme }) => theme.gridUnit * 2}px;
+      // margin-top: -${({ theme }) => theme.gridUnit * 15}px;
+      margin-bottom: ${({ theme }) => theme.gridUnit * 7}px;
+      margin-left: ${({ theme }) => theme.gridUnit * 25}px;
     }
   }
   .ant-menu-submenu {
@@ -156,7 +180,7 @@ const StyledHeader = styled.div`
   }
   .dropdown-menu-links > div.ant-menu-submenu-title,
   .ant-menu-submenu-open.ant-menu-submenu-active > div.ant-menu-submenu-title {
-    color: ${({ theme }) => theme.colors.primary.dark1};
+    color: ${({ theme }) => theme.colors.primary.light5};
   }
 `;
 
@@ -164,10 +188,10 @@ const styledDisabled = (theme: SupersetTheme) => css`
   color: ${theme.colors.grayscale.base};
   backgroundColor: ${theme.colors.grayscale.light2}};
 
-  .ant-menu-item:hover {
-    color: ${theme.colors.grayscale.base};
-    cursor: default;
-  }
+.ant-menu-item:hover {
+  color: ${theme.colors.primary.base};
+  cursor: pointer;
+}
 `;
 
 type MenuChild = {

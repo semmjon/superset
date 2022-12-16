@@ -24,7 +24,7 @@ import { reject } from 'lodash';
 import {
   getItem,
   dangerouslyGetItemDoNotUse,
-  setItem,
+  // setItem,
   dangerouslySetItemDoNotUse,
   LocalStorageKeys,
 } from 'src/utils/localStorageHelpers';
@@ -41,9 +41,9 @@ import {
 import { FeatureFlag, isFeatureEnabled } from 'src/featureFlags';
 import { AntdSwitch } from 'src/components';
 
-import ActivityTable from './ActivityTable';
-import ChartTable from './ChartTable';
-import SavedQueries from './SavedQueries';
+// import ActivityTable from './ActivityTable';
+// import ChartTable from './ChartTable';
+// import SavedQueries from './SavedQueries';
 import DashboardTable from './DashboardTable';
 
 const extensionsRegistry = getExtensionsRegistry();
@@ -67,10 +67,11 @@ interface LoadingProps {
 const DEFAULT_TAB_ARR = ['2', '3'];
 
 const WelcomeContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.grayscale.light4};
+  background-color: ${({ theme }) => theme.colors.grayscale.light3};
   .ant-row.menu {
+    border: none;
     margin-top: -15px;
-    background-color: ${({ theme }) => theme.colors.grayscale.light4};
+    background-color: ${({ theme }) => theme.colors.grayscale.light5};
     &:after {
       content: '';
       display: block;
@@ -84,10 +85,13 @@ const WelcomeContainer = styled.div`
       }
     }
     .ant-menu.ant-menu-light.ant-menu-root.ant-menu-horizontal {
+      background-color: ${({ theme }) => theme.colors.grayscale.light5};
+      margin: -3px 0px;
       padding-left: ${({ theme }) => theme.gridUnit * 8}px;
     }
     button {
-      padding: 3px 21px;
+      //padding: 3px 21px;
+      margin: 0;
     }
   }
   .ant-card-meta-description {
@@ -96,11 +100,27 @@ const WelcomeContainer = styled.div`
   .ant-card.ant-card-bordered {
     border: 1px solid ${({ theme }) => theme.colors.grayscale.light2};
   }
+  .ant-collapse {
+    margin-top: -50px;
+  }
+  .ant-menu-item {
+    background: none !important;
+  }
+  div.ant-collapse-item {
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    background-color: ${({ theme }) => theme.colors.grayscale.light5};
+    .ant-collapse-header .ant-collapse-arrow {
+      visibility: hidden;
+    }
+  }
   .ant-collapse-item .ant-collapse-content {
     margin-bottom: ${({ theme }) => theme.gridUnit * -6}px;
   }
   div.ant-collapse-item:last-child.ant-collapse-item-active
-    .ant-collapse-header {
+  .ant-collapse-header {
     padding-bottom: ${({ theme }) => theme.gridUnit * 3}px;
   }
   div.ant-collapse-item:last-child .ant-collapse-header {
@@ -117,18 +137,23 @@ const WelcomeContainer = styled.div`
 const WelcomeNav = styled.div`
   ${({ theme }) => `
     display: flex;
-    justify-content: space-between;
-    height: 50px;
-    background-color: ${theme.colors.grayscale.light5};
+    justify-content: space-between;    
+    height: 120px;
+    color: ${theme.colors.primary.light5};
+    background-color: ${theme.colors.ionos.blue1};
+    margin-top: -2px;
+    border-top: 1px solid ${theme.colors.ionos.blue3}; 
     .welcome-header {
-      font-size: ${theme.typography.sizes.l}px;
-      padding: ${theme.gridUnit * 4}px ${theme.gridUnit * 2 + 2}px;
-      margin: 0 ${theme.gridUnit * 2}px;
+      font-size: ${theme.typography.sizes.xl}px;
+      // padding: ${theme.gridUnit * 4}px ${theme.gridUnit * 2 + 2}px;
+      // margin: 0 ${theme.gridUnit * 2}px;
+      margin: 40px 78px;
     }
     .switch {
       display: flex;
-      flex-direction: row;
-      margin: ${theme.gridUnit * 4}px;
+      flex-direction: row;      
+      // margin: ${theme.gridUnit * 4}px;
+      margin: 40px 78px;
       span {
         display: block;
         margin: ${theme.gridUnit * 1}px;
@@ -155,7 +180,7 @@ function Welcome({ user, addDangerToast }: WelcomeProps) {
   const userid = user.userId;
   const id = userid!.toString(); // confident that user is not a guest user
   const recent = `/superset/recent_activity/${user.userId}/?limit=6`;
-  const [activeChild, setActiveChild] = useState('Loading');
+  const [, setActiveChild] = useState('Loading'); // activeChild
   const userKey = dangerouslyGetItemDoNotUse(id, null);
   let defaultChecked = false;
   if (isFeatureEnabled(FeatureFlag.THUMBNAILS)) {
@@ -164,20 +189,20 @@ function Welcome({ user, addDangerToast }: WelcomeProps) {
   }
   const [checked, setChecked] = useState(defaultChecked);
   const [activityData, setActivityData] = useState<ActivityData | null>(null);
-  const [chartData, setChartData] = useState<Array<object> | null>(null);
-  const [queryData, setQueryData] = useState<Array<object> | null>(null);
+  const [chartData] = useState<Array<object> | null>(null); // setChartData
+  const [queryData] = useState<Array<object> | null>(null); // setQueryData
   const [dashboardData, setDashboardData] = useState<Array<object> | null>(
     null,
   );
-  const [loadedCount, setLoadedCount] = useState(0);
+  const [, setLoadedCount] = useState(0); // loadedCount
 
   const collapseState = getItem(LocalStorageKeys.homepage_collapse_state, []);
   const [activeState, setActiveState] = useState<Array<string>>(collapseState);
 
-  const handleCollapse = (state: Array<string>) => {
-    setActiveState(state);
-    setItem(LocalStorageKeys.homepage_collapse_state, state);
-  };
+  // const handleCollapse = (state: Array<string>) => {
+  //   setActiveState(state);
+  //   setItem(LocalStorageKeys.homepage_collapse_state, state);
+  // };
 
   const WelcomeMessageExtension = extensionsRegistry.get('welcome.message');
   const WelcomeTopExtension = extensionsRegistry.get('welcome.banner');
@@ -214,13 +239,13 @@ function Welcome({ user, addDangerToast }: WelcomeProps) {
       );
 
     // Sets other activity data in parallel with recents api call
-    const ownSavedQueryFilters = [
-      {
-        col: 'created_by',
-        opr: 'rel_o_m',
-        value: `${id}`,
-      },
-    ];
+    // const ownSavedQueryFilters = [
+    //   {
+    //     col: 'created_by',
+    //     opr: 'rel_o_m',
+    //     value: `${id}`,
+    //   },
+    // ];
     getUserOwnedObjects(id, 'dashboard')
       .then(r => {
         setDashboardData(r);
@@ -233,28 +258,28 @@ function Welcome({ user, addDangerToast }: WelcomeProps) {
           t('There was an issue fetching your dashboards: %s', err),
         );
       });
-    getUserOwnedObjects(id, 'chart')
-      .then(r => {
-        setChartData(r);
-        setLoadedCount(loadedCount => loadedCount + 1);
-      })
-      .catch((err: unknown) => {
-        setChartData([]);
-        setLoadedCount(loadedCount => loadedCount + 1);
-        addDangerToast(t('There was an issue fetching your chart: %s', err));
-      });
-    getUserOwnedObjects(id, 'saved_query', ownSavedQueryFilters)
-      .then(r => {
-        setQueryData(r);
-        setLoadedCount(loadedCount => loadedCount + 1);
-      })
-      .catch((err: unknown) => {
-        setQueryData([]);
-        setLoadedCount(loadedCount => loadedCount + 1);
-        addDangerToast(
-          t('There was an issues fetching your saved queries: %s', err),
-        );
-      });
+    // getUserOwnedObjects(id, 'chart')
+    //   .then(r => {
+    //     setChartData(r);
+    //     setLoadedCount(loadedCount => loadedCount + 1);
+    //   })
+    //   .catch((err: unknown) => {
+    //     setChartData([]);
+    //     setLoadedCount(loadedCount => loadedCount + 1);
+    //     addDangerToast(t('There was an issue fetching your chart: %s', err));
+    //   });
+    // getUserOwnedObjects(id, 'saved_query', ownSavedQueryFilters)
+    //   .then(r => {
+    //     setQueryData(r);
+    //     setLoadedCount(loadedCount => loadedCount + 1);
+    //   })
+    //   .catch((err: unknown) => {
+    //     setQueryData([]);
+    //     setLoadedCount(loadedCount => loadedCount + 1);
+    //     addDangerToast(
+    //       t('There was an issues fetching your saved queries: %s', err),
+    //     );
+    //   });
   }, []);
 
   const handleToggle = () => {
@@ -282,8 +307,8 @@ function Welcome({ user, addDangerToast }: WelcomeProps) {
     }
   }, [activityData]);
 
-  const isRecentActivityLoading =
-    !activityData?.Examples && !activityData?.Viewed;
+  // const isRecentActivityLoading =
+  //   !activityData?.Examples && !activityData?.Viewed;
   return (
     <WelcomeContainer>
       {WelcomeMessageExtension && <WelcomeMessageExtension />}
@@ -292,7 +317,7 @@ function Welcome({ user, addDangerToast }: WelcomeProps) {
       {(!WelcomeTopExtension || !WelcomeMainExtension) && (
         <>
           <WelcomeNav>
-            <h1 className="welcome-header">{t('Home')}</h1>
+            <h1 className="welcome-header">Home</h1>
             {isFeatureEnabled(FeatureFlag.THUMBNAILS) ? (
               <div className="switch">
                 <AntdSwitch checked={checked} onChange={handleToggle} />
@@ -302,29 +327,29 @@ function Welcome({ user, addDangerToast }: WelcomeProps) {
           </WelcomeNav>
           <Collapse
             activeKey={activeState}
-            onChange={handleCollapse}
+            // onChange={handleCollapse}
             ghost
             bigger
           >
-            <Collapse.Panel header={t('Recents')} key="1">
-              {activityData &&
-              (activityData.Viewed ||
-                activityData.Examples ||
-                activityData.Created) &&
-              activeChild !== 'Loading' ? (
-                <ActivityTable
-                  user={{ userId: user.userId! }} // user is definitely not a guest user on this page
-                  activeChild={activeChild}
-                  setActiveChild={setActiveChild}
-                  activityData={activityData}
-                  loadedCount={loadedCount}
-                />
-              ) : (
-                <LoadingCards />
-              )}
-            </Collapse.Panel>
+            {/*  <Collapse.Panel header={t('Recents')} key="1"> */}
+            {/*    {activityData && */}
+            {/*    (activityData.Viewed || */}
+            {/*      activityData.Examples || */}
+            {/*      activityData.Created) && */}
+            {/*    activeChild !== 'Loading' ? ( */}
+            {/*      <ActivityTable */}
+            {/*        user={{ userId: user.userId! }} // user is definitely not a guest user on this page */}
+            {/*        activeChild={activeChild} */}
+            {/*        setActiveChild={setActiveChild} */}
+            {/*        activityData={activityData} */}
+            {/*        loadedCount={loadedCount} */}
+            {/*      /> */}
+            {/*    ) : ( */}
+            {/*      <LoadingCards /> */}
+            {/*    )} */}
+            {/*  </Collapse.Panel> */}
             <Collapse.Panel header={t('Dashboards')} key="2">
-              {!dashboardData || isRecentActivityLoading ? (
+              {!dashboardData ? (
                 <LoadingCards cover={checked} />
               ) : (
                 <DashboardTable
@@ -335,30 +360,30 @@ function Welcome({ user, addDangerToast }: WelcomeProps) {
                 />
               )}
             </Collapse.Panel>
-            <Collapse.Panel header={t('Charts')} key="3">
-              {!chartData || isRecentActivityLoading ? (
-                <LoadingCards cover={checked} />
-              ) : (
-                <ChartTable
-                  showThumbnails={checked}
-                  user={user}
-                  mine={chartData}
-                  examples={activityData?.Examples}
-                />
-              )}
-            </Collapse.Panel>
-            <Collapse.Panel header={t('Saved queries')} key="4">
-              {!queryData ? (
-                <LoadingCards cover={checked} />
-              ) : (
-                <SavedQueries
-                  showThumbnails={checked}
-                  user={user}
-                  mine={queryData}
-                  featureFlag={isFeatureEnabled(FeatureFlag.THUMBNAILS)}
-                />
-              )}
-            </Collapse.Panel>
+            {/* <Collapse.Panel header={t('Charts')} key="3"> */}
+            {/*  {!chartData || isRecentActivityLoading ? ( */}
+            {/*    <LoadingCards cover={checked} /> */}
+            {/*  ) : ( */}
+            {/*    <ChartTable */}
+            {/*      showThumbnails={checked} */}
+            {/*      user={user} */}
+            {/*      mine={chartData} */}
+            {/*      examples={activityData?.Examples} */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* </Collapse.Panel> */}
+            {/* <Collapse.Panel header={t('Saved queries')} key="4"> */}
+            {/*  {!queryData ? ( */}
+            {/*    <LoadingCards cover={checked} /> */}
+            {/*  ) : ( */}
+            {/*    <SavedQueries */}
+            {/*      showThumbnails={checked} */}
+            {/*      user={user} */}
+            {/*      mine={queryData} */}
+            {/*      featureFlag={isFeatureEnabled(FeatureFlag.THUMBNAILS)} */}
+            {/*    /> */}
+            {/*  )} */}
+            {/* </Collapse.Panel> */}
           </Collapse>
         </>
       )}

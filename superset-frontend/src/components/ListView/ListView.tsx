@@ -45,11 +45,14 @@ const ListViewStyles = styled.div`
     text-align: left;
     border-radius: 4px 0;
     margin: 0 ${({ theme }) => theme.gridUnit * 4}px;
-
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: -50px;
     .header {
       display: flex;
       padding-bottom: ${({ theme }) => theme.gridUnit * 4}px;
-
+      padding: 20px;
+      background-color: ${({ theme }) => theme.colors.grayscale.light5};
       & .controls {
         display: flex;
         flex-wrap: wrap;
@@ -64,12 +67,20 @@ const ListViewStyles = styled.div`
 
     .body {
       overflow-x: auto;
+      background-color: ${({ theme }) => theme.colors.grayscale.light5};
     }
 
     .ant-empty {
       .ant-empty-image {
         height: auto;
       }
+    }
+
+    @media (max-width: 767px) {
+      margin-left: 0px;
+      margin-right: 0px;
+      margin-top: -50px;
+      margin-bottom: 0px;
     }
   }
 
@@ -162,7 +173,6 @@ const ViewModeContainer = styled.div`
 
 const EmptyWrapper = styled.div`
   padding: ${({ theme }) => theme.gridUnit * 40}px 0;
-
   &.table {
     background: ${({ theme }) => theme.colors.grayscale.light5};
   }
